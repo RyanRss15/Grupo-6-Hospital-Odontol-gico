@@ -58,8 +58,8 @@ def remover_agendados_da_fila(lista_espera_df, qtd_agendada, caminho_arquivo_ori
 
 
 def main():
-    url = r"C:\Users\barbo\OneDrive\Desktop\iesi\lista_de_espera.xlsx"
-    
+    url = r"" #colocar o caminho para o arquivo exel xlsx
+
     print("=== Sistema de Agendamento Automático ===")
     clinica = input("Nome da clínica: ")
 
