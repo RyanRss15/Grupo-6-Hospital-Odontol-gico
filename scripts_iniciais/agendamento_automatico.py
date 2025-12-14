@@ -2,8 +2,8 @@ import pandas as pd
 import sys
 import os
 
-def carregar_lista_espera(caminho_excel):
-    print(f"Lendo arquivo em: {caminho_excel}")
+def carregar_lista_espera(caminho_excel = r"scripts_iniciais\\lista_de_espera_valida.xlsx"):
+    # print(f"Lendo arquivo em: {caminho_excel}")
     if not os.path.exists(caminho_excel):
         print("ERRO: O arquivo não foi encontrado neste caminho.")
         sys.exit()
@@ -11,12 +11,15 @@ def carregar_lista_espera(caminho_excel):
     df = pd.read_excel(caminho_excel, engine='openpyxl')
     return df
 
-def agendar_pacientes(lista_espera, horarios):
+def agendar_pacientes(lista_espera, horarios, qtd_agendar = 0, qtd_agendados = 0):
     agendamentos = []
-    qtd_agendar = min(len(lista_espera), len(horarios))
+    # qtd_agendar = min(len(lista_espera), len(horarios))
 
-    for i in range(qtd_agendar):
-        paciente = lista_espera.iloc[i]
+    for i in range(qtd_agendados, qtd_agendados + qtd_agendar):
+        try:
+            paciente = lista_espera.iloc[i]
+        except IndexError:
+            break
 
         data_bruta = paciente.get("Nascimento", "N/A")
         data_formatada = data_bruta
@@ -27,9 +30,7 @@ def agendar_pacientes(lista_espera, horarios):
         agendamentos.append({
             "Nome": paciente.get("Nome", "Desconhecido"),
             "CPF": paciente.get("CPF", "N/A"),
-            "Telefone": paciente.get("Telefone", "N/A"),
-            "Nascimento": data_formatada,
-            "Horário": horarios[i]
+            "Horario": horarios[i]
         })
 
     return agendamentos
@@ -58,7 +59,7 @@ def remover_agendados_da_fila(lista_espera_df, qtd_agendada, caminho_arquivo_ori
 
 
 def main():
-    url = r"" #colocar o caminho para o arquivo exel xlsx
+    url = r"scripts_iniciais\\lista_de_espera.xlsx" #colocar o caminho para o arquivo exel xlsx
 
     print("=== Sistema de Agendamento Automático ===")
     clinica = input("Nome da clínica: ")
