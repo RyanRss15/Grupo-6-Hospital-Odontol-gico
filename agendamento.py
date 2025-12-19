@@ -69,8 +69,13 @@ def agendamento(login, senha, n_pacientes, n_dias, id_agenda = 280):
 
             for pct in lista_pct:
                 try:
-                    id_paciente, nome_paciente = ti_saude_api.get_pacientes(pct["CPF"])
+                    paciente = ti_saude_api.get_pacientes(pct["Nome"])
                     
+                    if paciente == None:
+                        print("Criando paciente...")
+                        paciente = ti_saude_api.post_paciente(pct["CPF"], pct["Nome"]);
+                    
+                    id_paciente, nome_paciente = paciente
                     print(f"Agendando {nome_paciente} em {data_str} às {pct['Horario']}...", end="")
                     
                     resposta_agendamento = ti_saude_api.post_agendamento(
@@ -86,6 +91,11 @@ def agendamento(login, senha, n_pacientes, n_dias, id_agenda = 280):
                         print(" SUCESSO")
                         pct['Data'] = data_str
                         todos_agendamentos_sucesso.append(pct)
+                        
+                        # try:
+                        #     ti_saude_api.put_paciente(nome_paciente, id_paciente, pct["CPF"])
+                        # except:
+                        #     print("Cpf do paciente perdido no meio do processo.")
                     else:
                         print(f" FALHA: {resposta_agendamento.text}")
                 
