@@ -3,7 +3,7 @@ from openpyxl import load_workbook
 import sys
 import os
 
-CAMINHO_PADRAO = r"scripts_iniciais\\lista_de_espera_valida.xlsx"
+CAMINHO_PADRAO = r"scripts_iniciais\\lista_de_espera.xlsx"
 
 def carregar_lista_espera(caminho_excel=CAMINHO_PADRAO):
     if not os.path.exists(caminho_excel):

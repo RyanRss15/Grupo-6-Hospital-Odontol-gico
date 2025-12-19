@@ -65,7 +65,7 @@ def agendamento(login, senha, n_pacientes, n_dias, id_agenda = 280):
 
         for data_str, lista_pct in dict_agendamentos_previa.items():
             dt_obj = datetime.strptime(data_str, "%d/%m/%Y")
-            data_api = dt_obj.strftime("%Y-%m-%d")
+            data_api = dt_obj.strftime("%d-%m-%Y")
 
             for pct in lista_pct:
                 try:
