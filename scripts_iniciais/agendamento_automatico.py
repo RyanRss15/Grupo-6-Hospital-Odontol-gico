@@ -3,7 +3,8 @@ from openpyxl import load_workbook
 import sys
 import os
 
-CAMINHO_PADRAO = r"scripts_iniciais\\lista_de_espera.xlsx"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CAMINHO_PADRAO = os.path.join(BASE_DIR, "lista_de_espera.xlsx")
 
 def carregar_lista_espera(caminho_excel=CAMINHO_PADRAO):
     if not os.path.exists(caminho_excel):
